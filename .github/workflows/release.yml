@@ -38,7 +38,8 @@ jobs:
       run: ./gradlew assembleRelease
 
     - name: Sign APK (optional - requires signing key setup)
-      # Uncomment and configure if you have signing keys
+      run: echo "Skipping APK signing - no signing keys configured"
+      # Uncomment and configure if you have signing keys:
       # run: |
       #   echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > keystore.jks
       #   ./gradlew assembleRelease \
@@ -52,25 +53,16 @@ jobs:
       run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
     - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
+      uses: softprops/action-gh-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ steps.get_version.outputs.VERSION }}
+        tag_name: ${{ steps.get_version.outputs.VERSION }}
+        name: Release ${{ steps.get_version.outputs.VERSION }}
         body: |
           Changes in this Release:
           - Auto-generated release from tag ${{ steps.get_version.outputs.VERSION }}
+        files: |
+          app/build/outputs/apk/release/app-release.apk
         draft: false
         prerelease: false
-
-    - name: Upload Release APK
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: app/build/outputs/apk/release/app-release.apk
-        asset_name: jerboa-${{ steps.get_version.outputs.VERSION }}.apk
-        asset_content_type: application/vnd.android.package-archive
