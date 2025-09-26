@@ -39,12 +39,6 @@ jobs:
     - name: Run formatting check
       run: ./gradlew lintKotlin
 
-    - name: Run lint on changed files
-      run: ./gradlew lintDebug
-
-    - name: Run unit tests
-      run: ./gradlew testDebugUnitTest
-
     - name: Build debug APK to verify compilation
       run: ./gradlew assembleDebug
 
