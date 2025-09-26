@@ -9,9 +9,9 @@ import androidx.compose.material.icons.automirrored.outlined.Sort
 import androidx.compose.material.icons.outlined.Bookmarks
 import androidx.compose.material.icons.outlined.FilterList
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.LocationCity
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.MoreVert
+import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material.icons.outlined.ViewAgenda
@@ -51,7 +51,7 @@ import it.vercruysse.lemmyapi.datatypes.Tagline
 import it.vercruysse.lemmyapi.dto.ListingType
 import it.vercruysse.lemmyapi.dto.SortType
 import me.saket.cascade.CascadeDropdownMenu
-
+import androidx.compose.ui.res.painterResource
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeHeader(
@@ -250,7 +250,7 @@ fun ListingTypeOptionsDropDown(
         // TODO hide local for non-federated instances
         MenuItem(
             text = stringResource(R.string.dialogs_local),
-            icon = Icons.Outlined.LocationCity,
+            icon = Icons.Outlined.Place,
             onClick = { onClickListingType(ListingType.Local) },
             highlight = (selectedListingType == ListingType.Local),
         )

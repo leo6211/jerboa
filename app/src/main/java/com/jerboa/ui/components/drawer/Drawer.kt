@@ -23,7 +23,7 @@ import androidx.compose.material.icons.outlined.Bookmarks
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.ExpandLess
 import androidx.compose.material.icons.outlined.ExpandMore
-import androidx.compose.material.icons.outlined.LocationCity
+import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.WarningAmber
@@ -218,7 +218,7 @@ fun DrawerItemsMain(
         item {
             IconAndTextDrawerItem(
                 text = stringResource(R.string.home_local),
-                icon = Icons.Outlined.LocationCity,
+                icon = Icons.Outlined.Place,
                 onClick = {
                     onClickListingType(ListingType.Local)
                     onSelectTab(NavTab.Home)
