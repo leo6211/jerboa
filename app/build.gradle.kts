@@ -13,7 +13,8 @@ plugins {
 
 }
 
-apply(from = "update_instances.gradle.kts")
+// Temp disabled until https://issuetracker.google.com/issues/430991549 fixed
+//apply(from = "update_instances.gradle.kts")
 
 
 kotlin {
@@ -24,15 +25,15 @@ kotlin {
 }
 
 android {
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.jerboa"
         namespace = "com.jerboa"
         minSdk = 26
-        targetSdk = 35
-        versionCode = 83
-        versionName = "0.0.83"
+        targetSdk = 36
+        versionCode = 84
+        versionName = "0.0.84"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -81,6 +82,7 @@ android {
                 signingConfig = signingConfigs.getByName("release")
             }
 
+            // Keep using until AGP 9.0 then research proguard rules to retain debug info for stack traces
             postprocessing {
                 isRemoveUnusedCode = true
                 isObfuscate = false
@@ -101,6 +103,8 @@ android {
     buildFeatures {
         compose = true
     }
+    // Match build tools with CI image
+    buildToolsVersion = "36.0.0"
 }
 
 ksp {
@@ -117,7 +121,7 @@ dependencies {
     // Exporting / importing DB helper
     implementation("com.github.dessalines:room-db-export-import:0.1.0")
 
-    val composeBom = platform("androidx.compose:compose-bom:2025.08.01")
+    val composeBom = platform("androidx.compose:compose-bom:2025.09.00")
 
     api(composeBom)
     implementation("androidx.activity:activity-ktx")
@@ -154,7 +158,7 @@ dependencies {
     implementation("androidx.media3:media3-exoplayer-dash:1.8.0")
     implementation("androidx.media3:media3-exoplayer-smoothstreaming:1.8.0")
     // Allows for proper subsampling of large images
-    implementation("me.saket.telephoto:zoomable-image-coil:0.16.0")
+    implementation("me.saket.telephoto:zoomable-image-coil:0.17.0")
     // Animated dropdowns
     implementation("me.saket.cascade:cascade-compose:2.3.0")
 
@@ -162,18 +166,18 @@ dependencies {
     implementation("com.github.FunkyMuse:Crashy:1.2.0")
 
     // To use Kotlin annotation processing tool
-    ksp("androidx.room:room-compiler:2.7.2")
+    ksp("androidx.room:room-compiler:2.8.0")
 
-    implementation("androidx.room:room-runtime:2.7.2")
-    annotationProcessor("androidx.room:room-compiler:2.7.2")
+    implementation("androidx.room:room-runtime:2.8.0")
+    annotationProcessor("androidx.room:room-compiler:2.8.0")
 
     // optional - Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:2.7.2")
+    implementation("androidx.room:room-ktx:2.8.0")
 
     // optional - Test helpers
-    testImplementation("androidx.room:room-testing:2.7.2")
+    testImplementation("androidx.room:room-testing:2.8.0")
     testImplementation("pl.pragmatists:JUnitParams:1.1.1")
-    androidTestImplementation("androidx.room:room-testing:2.7.2")
+    androidTestImplementation("androidx.room:room-testing:2.8.0")
 
     implementation("io.arrow-kt:arrow-core:2.1.2")
 
@@ -196,10 +200,10 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit")
     androidTestImplementation("androidx.test.espresso:espresso-core")
 
-    testImplementation("org.mockito:mockito-core:5.19.0")
+    testImplementation("org.mockito:mockito-core:5.20.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:6.0.0")
 
-    implementation("androidx.browser:browser:1.8.0")
+    implementation("androidx.browser:browser:1.9.0")
 
     implementation("androidx.profileinstaller:profileinstaller")
     baselineProfile(project(":benchmarks"))
@@ -208,5 +212,5 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
 
     // For custom logging plugin
-    implementation("io.ktor:ktor-client-logging:3.2.3")
+    implementation("io.ktor:ktor-client-logging:3.3.0")
 }
